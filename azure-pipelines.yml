@@ -2,7 +2,7 @@ trigger:
 - master
  
 variables:
-  dockerId: regmaster 
+  dockerId: amolbhawari 
   imageName: webapp  
  
 steps:    
@@ -22,7 +22,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'Registry'
-    repository: 'sachinkgaikwad/devops'
+    repository: 'amolbhawari\apache2'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
  
