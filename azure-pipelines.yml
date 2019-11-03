@@ -1,16 +1,32 @@
 trigger:
 - master
-
-pool:
-  vmImage: 'Ubuntu-16.04'
-
+ 
 variables:
-  imageName: 'pipelines-javascript-docker'
-
-steps:
+  dockerId: regmaster 
+  imageName: webapp  
+ 
+steps:    
+# Azure
+#- script: |
+#    docker build -t $(dockerId).azurecr.io/$(imageName) .
+#    docker login -u $(dockerId) -p $(pswd) $(dockerId).azurecr.io
+#    docker push $(dockerId).azurecr.io/$(imageName)
+#  env: 
+#     pswd: $(dockerPassword)   
+ 
 - task: Docker@2
-  displayName: Build an image
   inputs:
-    repository: $(imageName)
-    command: build
-    Dockerfile: app/Dockerfile
+    containerRegistry: 'Registry'
+    command: 'login'
+ 
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Registry'
+    repository: 'sachinkgaikwad/devops'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+ 
+#- script: |
+#    echo Add other tasks to build, test, and deploy your project.
+#    echo See https://aka.ms/yaml
+#  displayName: 'Run a multi-line script'
